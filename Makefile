@@ -3,30 +3,30 @@ NAME = rt
 SRCS = \
 	main.cpp \
 	Application.class.cpp \
-	glad.c \
-
-
-SHADERS = \
-	shader.frag \
-	shader.vert
 
 HEADERS = \
 	headers/rt.hpp \
-	libkaf/libkaf.h \
+#	libkaf/libkaf.h \
 
 CC = g++
 
 ABS_DIR = $(shell pwd)
-INCLUDES = -Ilibkaf -Iglad/include/ -Iglfw/GLFW/include
+
 LIBS = -Llibkaf/
-GLFW_SRCS = $(ABS_DIR)/glfw-3.3.4
-GLFW_LIBS = $(ABS_DIR)/glfw
-GLAD = $(ABS_DIR)/glad
-CFLAGS_GLFW = $(shell export PKG_CONFIG_PATH=$(ABS_DIR)/glfw/lib/pkgconfig && pkg-config --cflags glfw3)
+
+#SFML build
+SFML_SRCS = $(ABS_DIR)/sfml
+SFML_BUILD = $(SFML_SRCS)/build
+SFML_LIBS = $(SFML_SRCS)/libs
+
+CFLAGS_SFML = $(shell export PKG_CONFIG_PATH=$(SFML_LIBS)/pkgconfig && pkg-config --cflags sfml-all)
+LIBS_SFML = $(shell export PKG_CONFIG_PATH=$(ABS_DIR)/glfw/lib/pkgconfig && pkg-config --static --libs sfml-all)
+
+INCLUDES = -I$(SFML_LIBS)/include
+#INCLUDES = -Ilibkaf -I$(SFML_LIBS)/include
 CFLAGS = -Wall -Wextra -g -std=c++17 -O2 $(CFLAGS_GLFW)
-LIBS_GLFW = $(shell export PKG_CONFIG_PATH=$(ABS_DIR)/glfw/lib/pkgconfig && pkg-config --static --libs glfw3)
 LDFLAGS = -lkaf $(LIBS_GLFW) "-Wl,-rpath,$(GLFW_LIBS)/lib" -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
-SLASH = /
+
 MKDIR := mkdir -p
 RM = /bin/rm -rf
 RESET = "\033[0m"
@@ -41,36 +41,30 @@ OPENGL = $(shell pkg-config --libs gl)
 
 S = srcs
 O = objs
-G = shaders
-P = spirv
-LIBKAF = libkaf$(SLASH)libkaf.a
-SRC = $(addprefix $S$(SLASH), $(SRCS))
-OBJ = $(SRC:$S%=$O%.o)
-GLSL = $(addprefix $G$(SLASH), $(SHADERS))
-SPV = $(GLSL:$G%=$P%.spv)
 
-.PHONY: all clean fclean re
+LIBKAF = libkaf/libkaf.a
+SRC = $(addprefix $S/, $(SRCS))
+OBJ = $(SRC:$S%=$O%.o)
+
+.PHONY: all dependencies clean fclean re
 
 all: $(NAME)
 
 dependencies:
-	sudo apt install xorg-dev libwayland-dev libxkbcommon-dev wayland-protocols extra-cmake-modules libglu1-mesa-dev freeglut3-dev mesa-common-dev
+	sudo apt install libc-dev libstdc++6 libgcc-s1 libudev1 libfreetype6 libx11-dev libxrandr-dev xorg x11-xserver-utils libgl-dev libflac-dev libogg-dev libopenal1 libopenal-dev libstdc++6 libvorbis-dev cmake-curses-gui doxygen
 
-vulkan:
-	wget -qO- https://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo tee /etc/apt/trusted.gpg.d/lunarg.asc
-	sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-jammy.list http://packages.lunarg.com/vulkan/lunarg-vulkan-jammy.list
-	sudo apt update
-	sudo apt install vulkan-sdk vulkan-tools libvulkan-dev vulkan-validationlayers-dev spirv-tools libxxf86vm-dev libxi-dev
+$(SFML_LIBS):
+	@if [ ! -d $(SFML_SRCS) ]; then \
+		git clone https://github.com/SFML/SFML.git sfml; \
+	fi
+	@if [ ! -d $(SFML_LIBS) ]; then \
+  		cd $(SFML_SRCS) && \
+        mkdir build && cd build && \
+        cmake -DCMAKE_INSTALL_PREFIX:PATH=$(SFML_LIBS) -DSFML_BUILD_DOC:BOOL=ON -DSFML_BUILD_EXAMPLES:BOOL=ON .. && \
+        make && \
+        make install; \
+    fi
 
-$(GLFW_LIBS):
-	@if [ ! -d $(GLFW_SRCS) ]; then \
-		unzip glfw-3.3.4.zip; \
-	fi
-	@if [ ! -d $(GLFW_LIBS) ]; then \
-		cmake -DCMAKE_INSTALL_PREFIX:PATH=$(GLFW_LIBS) -S $(GLFW_SRCS) -B $(GLFW_LIBS) && \
-		cd $(GLFW_LIBS) && \
-		make install; \
-	fi
 
 $(GLAD):
 	@if [ ! -d $(GLAD) ]; then \
@@ -87,18 +81,12 @@ $(OBJ): | $O
 $(OBJ): $O%.o: $S% $(HEADERS)
 	$(CC) -c -o $@ $(CFLAGS) $(INCLUDES) $<
 
-$P:
-	$(MKDIR) $@
+#$(LIBKAF):
+#	make -C libkaf
 
-$(SPV): | $P
+#$(NAME): $(GLFW_LIBS) $(GLAD) $(SPV) $(OBJ)
 
-$(SPV): $P%.spv: $G%
-	glslc $< -o $@
-
-$(LIBKAF):
-	make -C libkaf
-
-$(NAME): $(LIBKAF) $(GLFW_LIBS) $(GLAD) $(SPV) $(OBJ)
+$(NAME): $(SFML_LIBS) $(OBJ)
 	$(CC) -o $@ $(INCLUDES) $(LIBS) $(CFLAGS) $(OBJ) $(LDFLAGS)
 	@echo $(GREEN)Compiled executable $(NAME).
 

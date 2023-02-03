@@ -1,6 +1,4 @@
 #include "../headers/rt.hpp"
-#include "../libkaf/glm/glm/vec4.hpp"
-#include "../libkaf/glm/glm/mat4x4.hpp"
 
 int main(void)
 {
