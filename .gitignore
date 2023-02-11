@@ -9,3 +9,4 @@ rt
 spirv/
 sfml/
 .idea
+cmake-build-debug/
