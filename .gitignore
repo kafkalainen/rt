@@ -7,3 +7,5 @@ glfw/
 libkaf/libkaf.a
 rt
 spirv/
+sfml/
+.idea

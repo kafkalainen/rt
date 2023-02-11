@@ -3,10 +3,13 @@ NAME = rt
 SRCS = \
 	main.cpp \
 	Application.class.cpp \
+	Drawer.class.cpp \
+	Color.class.cpp \
 
 HEADERS = \
 	headers/rt.hpp \
-#	libkaf/libkaf.h \
+	headers/color.hpp \
+	headers/drawer.hpp \
 
 CC = g++
 
@@ -20,12 +23,11 @@ SFML_BUILD = $(SFML_SRCS)/build
 SFML_LIBS = $(SFML_SRCS)/libs
 
 CFLAGS_SFML = $(shell export PKG_CONFIG_PATH=$(SFML_LIBS)/pkgconfig && pkg-config --cflags sfml-all)
-LIBS_SFML = $(shell export PKG_CONFIG_PATH=$(ABS_DIR)/glfw/lib/pkgconfig && pkg-config --static --libs sfml-all)
+LIBS_SFML = $(shell export PKG_CONFIG_PATH=$(SFML_LIBS)/pkgconfig && pkg-config --static --libs sfml-all)
 
 INCLUDES = -I$(SFML_LIBS)/include
-#INCLUDES = -Ilibkaf -I$(SFML_LIBS)/include
-CFLAGS = -Wall -Wextra -g -std=c++17 -O2 $(CFLAGS_GLFW)
-LDFLAGS = -lkaf $(LIBS_GLFW) "-Wl,-rpath,$(GLFW_LIBS)/lib" -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
+CFLAGS = -Wall -Wextra -g -std=c++17 -O2 $(CFLAGS_SFML)
+LDFLAGS = $(LIBS_SFML) "-Wl,-rpath,$(SFML_LIBS)/lib"
 
 MKDIR := mkdir -p
 RM = /bin/rm -rf
@@ -51,7 +53,7 @@ OBJ = $(SRC:$S%=$O%.o)
 all: $(NAME)
 
 dependencies:
-	sudo apt install libc-dev libstdc++6 libgcc-s1 libudev1 libfreetype6 libx11-dev libxrandr-dev xorg x11-xserver-utils libgl-dev libflac-dev libogg-dev libopenal1 libopenal-dev libstdc++6 libvorbis-dev cmake-curses-gui doxygen
+	sudo apt install libc-dev libstdc++6 libgcc-s1 libudev1 libfreetype6 libx11-dev libxrandr-dev xorg x11-xserver-utils libgl-dev libflac-dev libogg-dev libopenal1 libopenal-dev libstdc++6 libvorbis-dev cmake-curses-gui doxygen valgrind
 
 $(SFML_LIBS):
 	@if [ ! -d $(SFML_SRCS) ]; then \
@@ -100,21 +102,16 @@ endif
 
 cleanobjdir: cleanobj
 	@$(RM) $O
-	@$(RM) $P
 
 clean: cleanobjdir
-	@if [ -d "$(GLFW_LIBS)" ] ; then \
-	make -C $(GLFW_LIBS) clean ; \
+	@if [ -d "$(SFML_BUILD)" ] ; then \
+	make -C $(SFML_BUILD) clean ; \
 	fi;
-	@make -C libkaf clean
 	@echo $(GREEN)Cleaned projects from object files.$(RESET)
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(RM) $(GLFW_SRCS)
-	@$(RM) $(GLFW_LIBS)
-	@$(RM) $(GLAD)
-	@make -C libkaf fclean
+	@$(RM) $(SFML_SRCS)
 	@echo $(GREEN)Removed binaries and libraries.$(RESET)
 
 re: fclean all

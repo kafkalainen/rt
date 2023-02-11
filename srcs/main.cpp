@@ -2,7 +2,7 @@
 
 int main(void)
 {
-    Application app;
+    rt::Application app;
 
     try
     {
