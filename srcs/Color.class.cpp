@@ -1,13 +1,10 @@
 //
-// Created by joonasvalamaki on 2/3/23.
-//
-//
-// Created by joonasvalamaki on 2/3/23.
+// Created by kafkalainen on 2/3/23.
 //
 
-#include "../headers/color.hpp"
+#include <Color.hpp>
 
-namespace rt
+namespace Raytracer
 {
     Color::Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
     {

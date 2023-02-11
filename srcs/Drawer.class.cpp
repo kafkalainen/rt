@@ -1,9 +1,10 @@
 //
-// Created by joonasvalamaki on 2/3/23.
+// Created by kafkalainen on 2/3/23.
 //
 
-#include "../headers/drawer.hpp"
-namespace rt
+#include <Drawer.hpp>
+
+namespace Raytracer
 {
     Drawer::Drawer(uint8_t *buffer, unsigned int width, unsigned int height)
     {

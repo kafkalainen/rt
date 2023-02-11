@@ -1,8 +1,8 @@
-#include "../headers/rt.hpp"
+#include <Raytracer.hpp>
 
-int main(void)
+int main()
 {
-    rt::Application app;
+    Raytracer::Application app;
 
     try
     {

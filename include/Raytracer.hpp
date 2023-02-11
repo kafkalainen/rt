@@ -1,12 +1,13 @@
-#ifndef RT_HPP
-#define RT_HPP
+#ifndef RAYTRACER_HPP
+#define RAYTRACER_HPP
 
 #include <iostream>
 #include <stdlib.h>
 #include <SFML/Graphics.hpp>
-#include "drawer.hpp"
+#include "Drawer.hpp"
 
-namespace rt {
+namespace Raytracer
+{
     using namespace sf;
 
     class Application {

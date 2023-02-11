@@ -1,12 +1,12 @@
 //
 // Created by joonasvalamaki on 2/3/23.
 //
-#ifndef RT_DRAWER_HPP
-#define RT_DRAWER_HPP
+#ifndef DRAWER_HPP
+#define DRAWER_HPP
 #include <stdint.h>
-#include "color.hpp"
+#include "Color.hpp"
 
-namespace rt
+namespace Raytracer
 {
     class Drawer
     {
@@ -21,4 +21,4 @@ namespace rt
     };
 }
 
-#endif //RT_DRAWER_HPP
+#endif //DRAWER_HPP

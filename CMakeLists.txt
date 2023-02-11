@@ -44,10 +44,13 @@ file(GLOB_RECURSE SRCS ./srcs/*)
 
 add_executable(
         Raytracer
-        ${SRCS}
-        include/color.hpp
-        include/drawer.hpp
-        include/rt.hpp
+        srcs/main.cpp
+        srcs/Application.class.cpp
+        srcs/Color.class.cpp
+        srcs/Drawer.class.cpp
+        include/Color.hpp
+        include/Drawer.hpp
+        include/Raytracer.hpp
 )
 
 target_link_libraries(

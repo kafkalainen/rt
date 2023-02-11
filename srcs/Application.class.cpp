@@ -1,8 +1,8 @@
-#include "../headers/rt.hpp"
-#include "../headers/color.hpp"
+#include <Raytracer.hpp>
+#include <Color.hpp>
 #include <string.h>
 
-namespace rt {
+namespace Raytracer {
     void    Application::run() {
         Application::initSfml();
         Application::initBuffers();
