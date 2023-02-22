@@ -3,6 +3,7 @@
 //
 
 #include <Drawer.hpp>
+#include <stdexcept>
 
 namespace Raytracer
 {
@@ -15,10 +16,20 @@ namespace Raytracer
 
     void Drawer::setPixel(unsigned int x, unsigned int y, Color color)
     {
-        *(m_buffer + (m_width * y + x)) = color.R;
-        *(m_buffer + (m_width * y + x + 1)) = color.G;
-        *(m_buffer + (m_width * y + x + 2)) = color.B;
-        *(m_buffer + (m_width * y + x + 3)) = color.A;
+		if (y > m_height)
+		{
+			throw std::out_of_range("y");
+		}
+
+		if (x > m_width)
+		{
+			throw std::out_of_range("x");
+		}
+
+        *(m_buffer + (m_width * y + x) * 4) = color.R;
+        *(m_buffer + (m_width * y + x) * 4 + 1) = color.G;
+        *(m_buffer + (m_width * y + x) * 4 + 2) = color.B;
+        *(m_buffer + (m_width * y + x) * 4 + 3) = color.A;
     }
 }
 

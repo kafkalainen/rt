@@ -46,12 +46,12 @@ add_executable(
         Raytracer
         srcs/main.cpp
         srcs/Application.class.cpp
-        srcs/Color.class.cpp
+        srcs/Color.cpp
         srcs/Drawer.class.cpp
         include/Color.hpp
         include/Drawer.hpp
         include/Raytracer.hpp
-)
+        include/Vec3.h include/Camera.h srcs/Camera.cpp include/Hittable.h include/Sphere.h srcs/Sphere.cpp include/HittableList.h srcs/HittableList.cpp include/Constants.h srcs/Vec3.cpp srcs/Vec3.cpp)
 
 target_link_libraries(
         Raytracer
