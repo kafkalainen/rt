@@ -14,13 +14,13 @@ namespace Raytracer
 		m_origin = point3(0, 0, 0);
 		m_horizontal = Vec3(m_viewportWidth, 0, 0);
 		m_vertical = Vec3(0, m_viewportHeight, 0);
-		m_lowerLeftCorner = m_origin - m_horizontal/2 - m_vertical/2 - Vec3(0, 0, m_focalLength);
+		m_lowerLeftCorner = m_origin - m_horizontal / 2 - m_vertical / 2 - Vec3(0, 0, m_focalLength);
 	}
 
 	void Camera::setOrigin(point3 origin)
 	{
 		m_origin = origin;
-		m_lowerLeftCorner = m_origin - m_horizontal/2 - m_vertical/2 - Vec3(0, 0, m_focalLength);
+		m_lowerLeftCorner = m_origin - m_horizontal / 2 - m_vertical / 2 - Vec3(0, 0, m_focalLength);
 	}
 
 	void Camera::setHorizontal(Vec3 horizontal)
