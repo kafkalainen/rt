@@ -10,14 +10,12 @@ namespace Raytracer
 	class Sphere : public Hittable
 	{
 		public:
-			Sphere(point3 cen, double r) : Center (cen), Radius(r) {};
-
-			bool hit(const Ray &r, double t_min, double t_max, HitRecord &rec) const override;
-
-		public:
 			point3 Center;
 			double Radius;
 
+			Sphere(point3 center, double r) : Center (center), Radius(r) {};
+
+			bool hit(const Ray &r, double t_min, double t_max, HitRecord &rec) const override;
 	};
 }
 #endif //RAYTRACER_SPHERE_H

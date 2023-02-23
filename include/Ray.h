@@ -2,8 +2,8 @@
 // Created by kafkalainen on 2/17/23.
 //
 
-#ifndef RAY_H
-#define RAY_H
+#ifndef RAYTRACER_RAY_H
+#define RAYTRACER_RAY_H
 
 #include <Vec3.h>
 
@@ -29,4 +29,4 @@ namespace Raytracer
 	};
 }
 
-#endif
+#endif //RAYTRACER_RAY_H

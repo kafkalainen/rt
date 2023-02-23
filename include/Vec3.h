@@ -2,8 +2,8 @@
 // Created by kafkalainen on 2/17/23.
 //
 
-#ifndef VEC3_H
-#define VEC3_H
+#ifndef RAYTRACER_VEC3_H
+#define RAYTRACER_VEC3_H
 
 #include <cmath>
 #include <iostream>
@@ -105,4 +105,4 @@ namespace Raytracer
 	}
 }
 
-#endif //VEC3_H
+#endif //RAYTRACER_VEC3_H
