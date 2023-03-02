@@ -12,6 +12,9 @@ namespace Raytracer
 	class Ray
 	{
 		public:
+			point3 orig;
+			Vec3 dir;
+
 			Ray() = default;
 			Ray(const point3& origin, const Vec3& direction) : orig(origin), dir(direction) {}
 
@@ -23,9 +26,6 @@ namespace Raytracer
 				return orig + t * dir;
 			}
 
-		public:
-			point3 orig;
-			Vec3 dir;
 	};
 }
 

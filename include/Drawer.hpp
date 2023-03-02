@@ -11,8 +11,10 @@ namespace Raytracer
     class Drawer
     {
         public:
-            Drawer(uint8_t *buffer, unsigned int width, unsigned int height);
-            void setPixel(unsigned int x, unsigned int y, Color color);
+			Drawer();
+
+            void	setPixel(unsigned int x, unsigned int y, Color color);
+			void	initialize(uint8_t *buffer, unsigned int width, unsigned int height);
 
         private:
             uint8_t			*m_buffer;

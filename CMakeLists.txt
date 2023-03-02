@@ -51,7 +51,7 @@ add_executable(
         include/Color.hpp
         include/Drawer.hpp
         include/Raytracer.hpp
-        include/Vec3.h include/Camera.h srcs/Camera.cpp include/Hittable.h include/Sphere.h srcs/Sphere.cpp include/HittableList.h srcs/HittableList.cpp include/Constants.h srcs/Vec3.cpp srcs/Vec3.cpp)
+        include/Vec3.h include/Camera.h srcs/Camera.cpp include/Hittable.h include/Sphere.h srcs/Sphere.cpp include/HittableList.h srcs/HittableList.cpp include/Constants.h srcs/Vec3.cpp srcs/Vec3.cpp include/Menu.h srcs/Menu.cpp include/Material.h srcs/Lambertian.cpp include/HitRecord.h include/Metal.h srcs/Metal.cpp include/Dielectric.h srcs/Dielectric.cpp)
 
 target_link_libraries(
         Raytracer

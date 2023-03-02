@@ -7,7 +7,9 @@
 
 namespace Raytracer
 {
-    Drawer::Drawer(uint8_t *buffer, unsigned int width, unsigned int height)
+	Drawer::Drawer() : m_buffer(nullptr), m_width(0), m_height(0) {}
+
+    void Drawer::initialize(uint8_t *buffer, unsigned int width, unsigned int height)
     {
         m_buffer = buffer;
         m_height = height;
@@ -18,12 +20,12 @@ namespace Raytracer
     {
 		if (y > m_height)
 		{
-			throw std::out_of_range("y");
+			throw std::out_of_range("y value out of range");
 		}
 
 		if (x > m_width)
 		{
-			throw std::out_of_range("x");
+			throw std::out_of_range("x value out of range");
 		}
 
         *(m_buffer + (m_width * y + x) * 4) = color.R;

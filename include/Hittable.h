@@ -6,24 +6,10 @@
 #define RAYTRACER_HITTABLE_H
 
 #include <Ray.h>
+#include "Material.h"
 
 namespace Raytracer
 {
-	struct HitRecord
-	{
-		point3 p;
-		Vec3 normal;
-		double t;
-		bool frontFace;
-
-		HitRecord() : t(0), frontFace(false), normal(0, 0, 0), p(0, 0, 0) {}
-
-		inline void setFaceNormal(const Ray& r, const Vec3& outwardNormal)
-		{
-			frontFace = dot(r.direction(), outwardNormal) < 0;
-			normal = frontFace ? outwardNormal : -outwardNormal;
-		}
-	};
 
 	class Hittable
 	{

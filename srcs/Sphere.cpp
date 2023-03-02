@@ -4,6 +4,7 @@
 #include "Hittable.h"
 #include "Ray.h"
 #include "Sphere.h"
+#include "Material.h"
 #include "Vec3.h"
 
 namespace Raytracer
@@ -32,6 +33,7 @@ namespace Raytracer
 		rec.p = r.at(rec.t);
 		Vec3 outwardNormal = (rec.p - Center) / Radius;
 		rec.setFaceNormal(r, outwardNormal);
+		rec.matPtr = matPtr;
 
 		return true;
 	}
