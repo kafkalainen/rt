@@ -14,7 +14,15 @@ namespace Raytracer
 	class Camera
 	{
 		public:
-			void initialize(double viewportHeight, double aspectRatio, double focalLength);
+			void initialize(
+					point3 lookFrom,
+					point3 lookAt,
+					Vec3 up,
+					double verticalFieldOfView,
+					double aspectRatio,
+					double aperture,
+					double focusDist
+					);
 
 			void setOrigin(point3 origin);
 
@@ -32,17 +40,21 @@ namespace Raytracer
 
 			Vec3 getLowerLeftCorner();
 
-			Ray getRay(double u, double v);
+			Ray getRay(double s, double t);
 
 		private:
 			double m_viewportHeight{};
 			double m_viewportWidth{};
-			double m_focalLength{};
 
 			point3 m_origin;
+			point3 m_lookAt;
 			Vec3 m_horizontal;
 			Vec3 m_vertical;
 			Vec3 m_lowerLeftCorner;
+			Vec3 m_forward;
+			Vec3 m_right;
+			Vec3 m_up;
+			double m_lensRadius;
 	};
 }
 #endif //RAYTRACER_CAMERA_H

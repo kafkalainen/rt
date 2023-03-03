@@ -193,7 +193,12 @@ namespace Raytracer
 
 	void Application::initRaytracer()
 	{
-		m_camera.initialize(2.0, 4.0 / 3.0, 1.0);
+		point3 lookFrom(3,3,2);
+		point3 lookAt(0,0,-1);
+		Vec3 worldUp(0,1,0);
+		auto dist_to_focus = (lookFrom-lookAt).length();
+		auto aperture = 2.0;
+		m_camera.initialize(lookFrom, lookAt, worldUp, 20.0, 4.0 / 3.0, aperture, dist_to_focus);
 		m_samplesPerPixel = 50;
 		m_maxDepth = 50;
 	}
